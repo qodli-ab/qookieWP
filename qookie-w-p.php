@@ -3,7 +3,7 @@
 /*
 Plugin Name: QookieQloud Wordpress Plugin
 Plugin URI: https://qookie.qodli.cloud
-Description: A brief description of the Plugin.
+Description: Connects to and integrates Cookie-Consent-Manager from Qodli.
 Version: 1.0
 Author: Qod:li AB
 Author URI: https://qodli.se
