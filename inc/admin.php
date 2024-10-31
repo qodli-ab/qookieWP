@@ -18,7 +18,7 @@ function qqm_display_admin_notice() {
                 <p><strong>QookieQloud™ Notice:</strong> This domain is not registered with QookieQloud™. Please <a href="' . esc_url(QOOKIE_REGISTER_URL) . '" target="_blank">register or log in</a> to add your domain and activate the Cookie-Consent-Manager.</p>
               </div>';
     } else {
-        error_log("Admin notice suppressed. Domain status: " . $domain_status);
+        //error_log("Admin notice suppressed. Domain status: " . $domain_status);
     }
 }
 add_action('admin_notices', 'qqm_display_admin_notice');
@@ -43,7 +43,7 @@ add_action('admin_menu', 'qqm_add_settings_page');
 function qqm_render_settings_page() {
     ?>
     <div class="wrap">
-        <img src="<?php echo QQ_LOGO_URL;?>" alt="QookieQloud Logo" style="max-width: 150px; margin-bottom: 20px; position: absolute; top: 20px; right: 20px;">
+        <img src="<?php echo esc_url(QQ_LOGO_URL);?>" alt="QookieQloud Logo" style="max-width: 150px; margin-bottom: 20px; position: absolute; top: 20px; right: 20px;">
 
         <h1>QookieQloud™ Settings</h1>
         <form method="post" action="options.php">

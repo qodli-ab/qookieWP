@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: QookieQloud™ Wordpress Plugin
+Plugin Name: QookieQloud™ Consent Management
 Plugin URI: https://qookieqloud.com
 Description: Connects to and integrates Cookie-Consent-Manager from QookieQloud™ by Qodli AB.
-Version: 1.2.8
+Version: 1.2.9
 Author: Qod:li AB
 Author URI: https://qodli.se
 License: GPL2
@@ -24,8 +24,8 @@ require_once plugin_dir_path(__FILE__) . 'inc/admin.php';
  * Check domain registration on activation
  */
 function qqm_check_domain_registration() {
-    $domain = parse_url(home_url(), PHP_URL_HOST);
-    $data = json_encode(['domain' => $domain]);
+    $domain = wp_parse_url(home_url(), PHP_URL_HOST);
+    $data = wp_json_encode(['domain' => $domain]);
 
     // Generate authorization headers
     $auth = qqm_generate_signature($domain);
@@ -44,7 +44,7 @@ function qqm_check_domain_registration() {
 
     if (is_wp_error($response)) {
         update_option('qqm_domain_registered', 'not_checked');
-        error_log('API request failed: ' . $response->get_error_message());
+        //error_log('API request failed: ' . $response->get_error_message());
         return;
     }
 
@@ -55,10 +55,10 @@ function qqm_check_domain_registration() {
     if ($status_code === 200 && !empty($body['registered'])) {
         $is_registered = $body['registered'] === true;
         update_option('qqm_domain_registered', $is_registered ? 'registered' : 'not_registered');
-        error_log('Domain registration check successful: ' . ($is_registered ? 'registered' : 'not_registered'));
+        //error_log('Domain registration check successful: ' . ($is_registered ? 'registered' : 'not_registered'));
     } else {
         update_option('qqm_domain_registered', 'not_registered');
-        error_log('Unexpected API response: ' . wp_remote_retrieve_body($response));
+        //error_log('Unexpected API response: ' . wp_remote_retrieve_body($response));
     }
 }
 
