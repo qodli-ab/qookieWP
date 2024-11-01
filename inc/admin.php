@@ -99,15 +99,25 @@ function qqm_load_for_logged_in_render() {
  * Handle the re-check action for domain registration
  */
 function qqm_recheck_domain() {
-    if (!isset($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'qqm_recheck_nonce')) {
+    // Verify nonce for security
+    $nonce = isset($_GET['nonce']) ? wp_unslash($_GET['nonce']) : '';
+    if (!wp_verify_nonce(sanitize_text_field($nonce), 'qqm_recheck_nonce')) {
         wp_die('Security check failed');
     }
 
-    qqm_check_domain_registration(); // Re-use the function from the main file
-    wp_redirect(admin_url('plugins.php'));
+    // Re-run domain registration check
+    qqm_check_domain_registration();
+
+    // Redirect back to the plugins page after re-check
+    wp_safe_redirect(admin_url('plugins.php'));
     exit;
 }
 
-if (isset($_GET['action']) && $_GET['action'] === 'qqm_recheck_domain') {
-    add_action('admin_init', 'qqm_recheck_domain');
+// Conditionally add action only when needed
+function qqm_maybe_add_recheck_action() {
+    $action = isset($_GET['action']) ? wp_unslash($_GET['action']) : '';
+    if (sanitize_text_field($action) === 'qqm_recheck_domain') {
+        add_action('admin_init', 'qqm_recheck_domain');
+    }
 }
+add_action('admin_init', 'qqm_maybe_add_recheck_action');

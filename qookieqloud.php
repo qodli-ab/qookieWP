@@ -4,7 +4,7 @@
 Plugin Name: QookieQloud™ Consent Management
 Plugin URI: https://qookieqloud.com
 Description: Connects to and integrates Cookie-Consent-Manager from QookieQloud™ by Qodli AB.
-Version: 1.2.9
+Version: 1.2.10
 Author: Qod:li AB
 Author URI: https://qodli.se
 License: GPL2

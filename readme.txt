@@ -1,9 +1,9 @@
-=== QookieQloud™ Consent Management Platform ===
+=== QookieQloud™ Consent Management ===
 Contributors: Qodli AB
 Tags: cookie consent, GDPR, privacy, cookie management, consent management, GDPR compliance
 Requires at least: 5.0
-Tested up to: 6.3
-Stable tag: 1.2.8
+Tested up to: 6.6
+Stable tag: 1.2.10
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
