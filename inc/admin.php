@@ -3,7 +3,7 @@
 // Check for direct access
 if (!defined('ABSPATH')) exit;
 
-define('QOOKIEQLOUD_LOGO_URL', plugins_url('assets/QookieQloud-Logo.png', __FILE__));
+define('QOOKIEQLOUD_LOGO_URL', plugins_url('../assets/QookieQloud-Logo.png', __FILE__));
 
 /**
  * Add admin notice if the domain is not registered
