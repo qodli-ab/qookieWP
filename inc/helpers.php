@@ -9,8 +9,8 @@ if (!defined('ABSPATH')) exit;
  * @param string $data The data to be signed
  * @return array The signature and timestamp
  */
-function qqm_generate_signature($data) {
+function qookieqloud_generate_signature($data) {
     $timestamp = time();
-    $signature = hash_hmac('sha256', $data . $timestamp, QOOKIE_SECRET);
+    $signature = hash_hmac('sha256', $data . $timestamp, QOOKIEQLOUD_SECRET);
     return ['timestamp' => $timestamp, 'signature' => $signature];
 }

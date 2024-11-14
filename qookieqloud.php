@@ -12,9 +12,9 @@ License: GPL2
 
 if (!defined('ABSPATH')) exit;
 
-define('QOOKIE_API_URL', 'https://app.qookie.cloud/api/v1/check-domain');
-define('QOOKIE_REGISTER_URL', 'https://app.qookie.cloud/login');
-define('QOOKIE_SECRET', 'dapfe1?Wutfix/cerhig');
+define('QOOKIEQLOUD_API_URL', 'https://app.qookie.cloud/api/v1/check-domain');
+define('QOOKIEQLOUD_REGISTER_URL', 'https://app.qookie.cloud/login');
+define('QOOKIEQLOUD_SECRET', 'dapfe1?Wutfix/cerhig');
 
 // Include other files
 require_once plugin_dir_path(__FILE__) . 'inc/helpers.php';
@@ -23,27 +23,27 @@ require_once plugin_dir_path(__FILE__) . 'inc/admin.php';
 /**
  * Check domain registration on activation
  */
-function qqm_check_domain_registration() {
+function qookieqloud_check_domain_registration() {
     $domain = wp_parse_url(home_url(), PHP_URL_HOST);
     $data = wp_json_encode(['domain' => $domain]);
 
     // Generate authorization headers
-    $auth = qqm_generate_signature($domain);
+    $auth = qookieqloud_generate_signature($domain);
 
     // Send POST request to your API
-    $response = wp_remote_post(QOOKIE_API_URL, [
+    $response = wp_remote_post(QOOKIEQLOUD_API_URL, [
         'body' => $data,
         'headers' => [
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'X-Timestamp' => $auth['timestamp'],
             'X-Signature' => $auth['signature'],
-            'Authorization' => 'Bearer ' . QOOKIE_SECRET,
+            'Authorization' => 'Bearer ' . QOOKIEQLOUD_SECRET,
         ],
     ]);
 
     if (is_wp_error($response)) {
-        update_option('qqm_domain_registered', 'not_checked');
+        update_option('qookieqloud_domain_registered', 'not_checked');
         //error_log('API request failed: ' . $response->get_error_message());
         return;
     }
@@ -54,19 +54,19 @@ function qqm_check_domain_registration() {
     // Check if the API responded with the expected data
     if ($status_code === 200 && !empty($body['registered'])) {
         $is_registered = $body['registered'] === true;
-        update_option('qqm_domain_registered', $is_registered ? 'registered' : 'not_registered');
+        update_option('qookieqloud_domain_registered', $is_registered ? 'registered' : 'not_registered');
         //error_log('Domain registration check successful: ' . ($is_registered ? 'registered' : 'not_registered'));
     } else {
-        update_option('qqm_domain_registered', 'not_registered');
+        update_option('qookieqloud_domain_registered', 'not_registered');
         //error_log('Unexpected API response: ' . wp_remote_retrieve_body($response));
     }
 }
 
-register_activation_hook(__FILE__, 'qqm_check_domain_registration');
+register_activation_hook(__FILE__, 'qookieqloud_check_domain_registration');
 
 // Conditionally add "Re-check" or "Registered" in the plugin actions
-function qqm_add_recheck_or_registered_link($links) {
-    $domain_status = get_option('qqm_domain_registered', 'not_checked');
+function qookieqloud_add_recheck_or_registered_link($links) {
+    $domain_status = get_option('qookieqloud_domain_registered', 'not_checked');
 
     if ($domain_status === 'registered') {
         // Show "Registered" text if the domain is registered
@@ -75,8 +75,8 @@ function qqm_add_recheck_or_registered_link($links) {
     } else {
         // Add the "Re-check" link if the domain is not registered
         $recheck_url = add_query_arg([
-            'action' => 'qqm_recheck_domain',
-            'nonce' => wp_create_nonce('qqm_recheck_nonce')
+            'action' => 'qookieqloud_recheck_domain',
+            'nonce' => wp_create_nonce('qookieqloud_recheck_nonce')
         ], admin_url('admin.php'));
 
         $recheck_link = '<a href="' . esc_url($recheck_url) . '">Re-check</a>';
@@ -85,11 +85,11 @@ function qqm_add_recheck_or_registered_link($links) {
 
     return $links;
 }
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'qqm_add_recheck_or_registered_link');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'qookieqloud_add_recheck_or_registered_link');
 
 
 // Add a "Settings" link in the plugins list
-function qqm_add_settings_link($links) {
+function qookieqloud_add_settings_link($links) {
     // URL to the plugin's settings page
     $settings_url = add_query_arg('page', 'qookieqloud', admin_url('options-general.php'));
 
@@ -99,15 +99,15 @@ function qqm_add_settings_link($links) {
 
     return $links;
 }
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'qqm_add_settings_link');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'qookieqloud_add_settings_link');
 
 
 /**
  * Enqueue the consent manager script
  */
-function qqm_enqueue_scripts() {
-    $domain_registered = get_option('qqm_domain_registered', 'not_checked');
-    $load_setting = get_option('qqm_load_for_logged_in', 'public');
+function qookieqloud_enqueue_scripts() {
+    $domain_registered = get_option('qookieqloud_domain_registered', 'not_checked');
+    $load_setting = get_option('qookieqloud_load_for_logged_in', 'public');
 
     if ($domain_registered === 'registered') {
         // Check if script should load for all users or only public users
@@ -117,4 +117,4 @@ function qqm_enqueue_scripts() {
         }
     }
 }
-add_action('wp_enqueue_scripts', 'qqm_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'qookieqloud_enqueue_scripts');

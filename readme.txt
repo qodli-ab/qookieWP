@@ -1,9 +1,9 @@
 === QookieQloud™ Consent Management ===
-Contributors: Qodli AB
+Contributors: qodliab
 Tags: cookie consent, GDPR, privacy, cookie management, consent management, GDPR compliance
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 1.2.10
+Stable tag: 1.2.11
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,9 @@ Automated and effortless cookie consent management within WordPress, powered by 
 == Description ==
 
 QookieQloud™ Consent Management Platform brings you a powerful, automated solution for cookie consent management within WordPress, making GDPR compliance effortless. Manage cookies and collect consents for one or multiple domains, directly from the QookieQloud™ Platform.
+By installing this plugin, you agree to the Terms of Service and Privacy Policy available at:
+
+- **Terms of Service & Privacy Policy **: [https://qookieqloud.com/policy](https://qookieqloud.com/policy)
 
 ### Key Features
 
@@ -36,6 +39,12 @@ QookieQloud™ Consent Management Platform brings you a powerful, automated solu
 3. Activate the plugin through the 'Plugins' screen in WordPress.
 4. Once activated, the plugin will attempt to verify your domain with QookieQloud™. Follow the prompt if your domain is not yet registered.
 
+== External Services ==
+
+This plugin sends the domainname of your wordpress site to verify if the domain is registered in our platform: https://app.qookie.cloud, which ofcourse is free.
+It also loads the consent-manager from that same platform to enable the cookie-consent-manager dialog that will appear on your homepage when activated.
+The consent-manager itself will check and show your visitors categorized cookies that are used on your homepage, so they can accept or decline the usage of them.
+
 == Frequently Asked Questions ==
 
 = How do I register my domain with QookieQloud™? =
@@ -51,6 +60,10 @@ Once your domain is registered, log in to the QookieQloud™ dashboard at https:
 The QookieQloud™ platform automatically manages cookies and consent collection for you, ensuring privacy compliance without the need for manual configuration.
 
 == Changelog ==
+
+= 1.2.11 =
+* Improved Sanitizing, Escaping and Validation
+* Moved remote-image to local plugin/assets
 
 = 1.2.8 =
 * Added domain registration verification on activation.
