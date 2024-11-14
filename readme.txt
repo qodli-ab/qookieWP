@@ -2,7 +2,7 @@
 Contributors: qodliab
 Tags: cookie consent, GDPR, privacy, cookie management, consent management, GDPR compliance
 Requires at least: 5.0
-Tested up to: 6.6
+Tested up to: 6.7
 Stable tag: 1.2.11
 Requires PHP: 7.4
 License: GPLv2 or later

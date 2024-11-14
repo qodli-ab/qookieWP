@@ -110,7 +110,7 @@ function qookieqloud_load_for_logged_in_render() {
         <option value="all" <?php echo esc_attr(selected($value, 'all', false)); ?>>All Visitors (Including Logged In)</option>
     </select>
     <p class="description">
-        <?php esc_html_e('Choose whether the QookieQloud™ Consentmanager script should load for public visitors only or for everyone.', 'text-domain'); ?>
+        <?php esc_html_e('Choose whether the QookieQloud™ Consentmanager script should load for public visitors only or for everyone.', 'qookieqloud'); ?>
     </p>
     <?php
 }
