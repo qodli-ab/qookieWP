@@ -139,6 +139,12 @@ function qookieqloud_maybe_add_recheck_action() {
     $action = isset($_GET['action']) ? sanitize_text_field(wp_unslash($_GET['action'])) : '';
 
     if ($action === 'qookieqloud_recheck_domain') {
+        // Verify the nonce before proceeding
+        $nonce = isset($_GET['_wpnonce']) ? sanitize_text_field(wp_unslash($_GET['_wpnonce'])) : '';
+        if (!wp_verify_nonce($nonce, 'qookieqloud_recheck_nonce')) {
+            wp_die(esc_html__('Security check failed', 'qookieqloud'));
+        }
+
         // Add admin_init action if the sanitized and validated action matches the expected value
         add_action('admin_init', 'qookieqloud_recheck_domain');
     }

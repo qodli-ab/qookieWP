@@ -1,6 +1,6 @@
 === QookieQloud™ Consent Management ===
 Contributors: qodliab
-Tags: cookie consent, GDPR, privacy, cookie management, consent management, GDPR compliance
+Tags: cookie consent, GDPR, privacy, consent management, consentmode v2
 Requires at least: 5.0
 Tested up to: 6.7
 Stable tag: 1.2.11
@@ -8,7 +8,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Automated and effortless cookie consent management within WordPress, powered by QookieQloud™. Easily manage cookies, collect consents, and handle multiple domains from a single, user-friendly platform.
+Automated and effortless cookie consent management within WordPress, powered by QookieQloud™. Easily manage cookies, collect consents.
 
 == Description ==
 
@@ -69,15 +69,6 @@ The QookieQloud™ platform automatically manages cookies and consent collection
 * Added domain registration verification on activation.
 * Enhanced loading options for consent manager script.
 * Improved UI for admin notifications and settings page.
-
-= 1.2 =
-* Initial release with automated domain verification and consent manager script loading.
-* Added settings for loading script based on visitor type.
-
-== Upgrade Notice ==
-
-= 1.2.8 =
-Upgrade to this version for enhanced domain registration and verification features. Adds options to load the consent manager script based on visitor type.
 
 == License ==
 
