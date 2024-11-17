@@ -20,8 +20,23 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         run: |
+          # Check out the WordPress SVN repo
           svn checkout https://plugins.svn.wordpress.org/qookieqloud wp-svn
-          rsync -av --delete ./ wp-svn/trunk/ --exclude '.git*' --exclude '.github'
+
+          # Sync the plugin code to the trunk directory
+          rsync -av --delete ./ wp-svn/trunk/ --exclude '.git*' --exclude '.github' --exclude 'svn-assets'
+
+          # Sync the svn-assets directory to the assets directory in the SVN repo
+          if [ -d "svn-assets" ]; then
+            rsync -av --delete ./svn-assets/ wp-svn/assets/
+          fi
+
+          # Go into the SVN directory
           cd wp-svn
-          svn add --force *
-          svn commit -m "Deploying version $GITHUB_REF_NAME"
+
+          # Add new files and mark deleted ones for SVN
+          svn add --force * --auto-props --parents --depth infinity -q
+          svn delete --force $(svn status | grep '^!' | awk '{print $2}') || true
+
+          # Commit changes to the SVN repository
+          svn commit -m "Deploying version ${GITHUB_REF_NAME}"
