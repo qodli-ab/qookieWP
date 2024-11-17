@@ -1,0 +1,27 @@
+name: Deploy to WordPress SVN
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Subversion
+        run: sudo apt-get install -y subversion
+
+      - name: Deploy to WordPress SVN
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        run: |
+          svn checkout https://plugins.svn.wordpress.org/qookieqloud wp-svn
+          rsync -av --delete ./ wp-svn/trunk/ --exclude '.git*' --exclude '.github'
+          cd wp-svn
+          svn add --force *
+          svn commit -m "Deploying version $GITHUB_REF_NAME"
