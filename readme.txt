@@ -3,7 +3,7 @@ Contributors: qodliab
 Tags: cookie consent, GDPR, privacy, consent management, consentmode v2
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 1.2.11
+Stable tag: 1.2.12
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -60,6 +60,9 @@ Once your domain is registered, log in to the QookieQloud™ dashboard at https:
 The QookieQloud™ platform automatically manages cookies and consent collection for you, ensuring privacy compliance without the need for manual configuration.
 
 == Changelog ==
+
+= 1.2.12 =
+* Added assets
 
 = 1.2.11 =
 * Improved Sanitizing, Escaping and Validation
