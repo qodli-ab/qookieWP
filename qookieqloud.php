@@ -4,7 +4,7 @@
 Plugin Name: QookieQloud™ Consent Management
 Plugin URI: https://qookieqloud.com/wordpress
 Description: Connects to and integrates Cookie-Consent-Manager from QookieQloud™ by Qodli AB.
-Version: 1.4.2
+Version: 1.4.3
 Author: Qod:li AB
 Author URI: https://qodli.se
 License: GPLv2
@@ -12,8 +12,8 @@ License: GPLv2
 
 if (!defined('ABSPATH')) exit;
 
-define('QOOKIEQLOUD_API_URL', 'https://app.qookie.cloud/api/v1/check-domain');
-define('QOOKIEQLOUD_REGISTER_URL', 'https://app.qookie.cloud/login');
+define('QOOKIEQLOUD_API_URL', 'https://app.qookieqloud.com/api/v1/check-domain');
+define('QOOKIEQLOUD_REGISTER_URL', 'https://app.qookieqloud.com/login');
 define('QOOKIEQLOUD_SECRET', 'dapfe1?Wutfix/cerhig');
 
 // Include other files
@@ -120,7 +120,7 @@ function qookieqloud_enqueue_scripts() {
 
         // Check if script should load for all users or only public users
         if ($load_setting === 'all' || ($load_setting === 'public' && !is_user_logged_in())) {
-            wp_enqueue_script('consent-manager', 'https://app.qookie.cloud/js/consentLoader.js', ['wp-consent-api'], '1.2.x', true);
+            wp_enqueue_script('consent-manager', 'https://js.qookieqloud.com/consentLoader.js', ['wp-consent-api'], '1.3.x', true);
             wp_script_add_data('consent-manager', 'async', true);
         }
     }

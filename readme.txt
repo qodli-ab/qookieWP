@@ -3,7 +3,7 @@ Contributors: qodliab
 Tags: cookie consent, GDPR, privacy, consent management, consentmode v2
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -54,12 +54,15 @@ After activation, the plugin will automatically check your domain registration s
 Yes! In the QookieQloud™ settings, you can specify whether the consent manager should load for public visitors only or all visitors (including logged-in users).
 
 = Where can I manage cookies and consents for multiple domains? =
-Once your domain is registered, log in to the QookieQloud™ dashboard at https://app.qookie.cloud. You’ll be able to manage cookies, consents, and more for all your registered domains in one place.
+Once your domain is registered, log in to the QookieQloud™ dashboard at https://app.qookieqloud.com. You’ll be able to manage cookies, consents, and more for all your registered domains in one place.
 
 = Do I need to configure cookies individually? =
 The QookieQloud™ platform automatically manages cookies and consent collection for you, ensuring privacy compliance without the need for manual configuration.
 
 == Changelog ==
+
+= 1.4.3 =
+* Changed backend and loader URLS
 
 = 1.4.2 =
 * Fixed issue with registration in WP Consent API

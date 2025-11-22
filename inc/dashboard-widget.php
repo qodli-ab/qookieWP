@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) exit;
 // ------- Settings -------
 define('QOOKIEQLOUD_STATS_TRANSIENT', 'QOOKIEQLOUD_STATS_CACHE');
 define('QOOKIEQLOUD_STATS_TTL', 60 * 60); // cache 5 min
-define('QOOKIEQLOUD_STATS_URL', 'https://app.qookie.cloud/api/v1/domainstats');
+define('QOOKIEQLOUD_STATS_URL', 'https://app.qookieqloud.com/api/v1/domainstats');
 // -----------------------
 
 /**
