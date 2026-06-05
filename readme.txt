@@ -61,6 +61,9 @@ The QookieQloud™ platform automatically manages cookies and consent collection
 
 == Changelog ==
 
+= 2.0.0 =
+* Added detailed dashboard with stats and insights on cookie consents and user interactions.
+
 = 1.4.5 =
 * Compatible with Wordpress 7.0.x
 

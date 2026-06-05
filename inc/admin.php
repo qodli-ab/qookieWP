@@ -24,18 +24,44 @@ function qookieqloud_display_admin_notice() {
 add_action('admin_notices', 'qookieqloud_display_admin_notice');
 
 /**
- * Add plugin settings page in the WordPress admin menu
+ * Add plugin menu and pages in the WordPress admin menu
  */
-function qookieqloud_add_settings_page() {
-    add_options_page(
-        'QookieQloud Settings',
+function qookieqloud_add_admin_menu() {
+    // Add top-level menu
+    add_menu_page(
+        'QookieQloud',
         'QookieQloud',
         'manage_options',
         'qookieqloud',
+        'qookieqloud_render_dashboard_page', // Default to dashboard
+        'dashicons-visibility', // Eye icon matches the "eyes" theme
+        25
+    );
+
+    // Add Dashboard submenu (same slug as parent to make it the default)
+    add_submenu_page(
+        'qookieqloud',
+        'QookieQloud Dashboard',
+        'Dashboard',
+        'manage_options',
+        'qookieqloud',
+        'qookieqloud_render_dashboard_page'
+    );
+
+    // Add Settings submenu
+    add_submenu_page(
+        'qookieqloud',
+        'QookieQloud Settings',
+        'Settings',
+        'manage_options',
+        'qookieqloud-settings',
         'qookieqloud_render_settings_page'
     );
+
+    // Remove the old options page if it exists (it was registered as 'qookieqloud' under 'options-general.php')
+    // Actually, we are just changing how we register it, so we don't need to explicitly remove it unless it was already registered.
 }
-add_action('admin_menu', 'qookieqloud_add_settings_page');
+add_action('admin_menu', 'qookieqloud_add_admin_menu');
 
 /**
  * Render the settings page content
@@ -55,6 +81,20 @@ function qookieqloud_render_settings_page() {
         </form>
     </div>
     <?php
+}
+
+/**
+ * Render the dashboard page content (Forward to dashboard.php)
+ */
+function qookieqloud_render_dashboard_page() {
+    if (file_exists(plugin_dir_path(__FILE__) . 'dashboard.php')) {
+        require_once plugin_dir_path(__FILE__) . 'dashboard.php';
+        if (function_exists('qookieqloud_render_dashboard_content')) {
+            qookieqloud_render_dashboard_content();
+        }
+    } else {
+        echo '<div class="wrap"><h1>Dashboard</h1><p>Dashboard content coming soon.</p></div>';
+    }
 }
 
 

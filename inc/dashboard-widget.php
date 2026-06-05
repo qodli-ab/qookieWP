@@ -69,23 +69,20 @@ function qookieqloud_fetch_stats_from_backend() : array {
 
         $updated_raw = $body['updated_at'] ?? '';
         $updated_ts  = is_numeric($updated_raw) ? (int) $updated_raw : strtotime($updated_raw);
-        $updated_local = $updated_ts ? wp_date( get_option('date_format') . ' dashboard-widget.php' .get_option('time_format'), $updated_ts ) : '';
+        $updated_local = $updated_ts ? wp_date( get_option('date_format') . ' ' . get_option('time_format'), $updated_ts ) : '';
 
-        // Mappa/normalisera säkert
-        $consents_total = isset($body['consents_total']) ? (int)$body['consents_total'] : 0;
-        $consents_today = isset($body['consents_today']) ? (int)$body['consents_today'] : 0;
-        $cookies        = isset($body['cookies'])        ? (int)$body['cookies']        : 0;
-        $trackers       = isset($body['trackers'])       ? (int)$body['trackers']       : 0;
-        $updated_at     = !empty($body['updated_at'])    ? $body['updated_at']          : current_time('mysql');
-
-        return [
-            'consents_total' => $consents_total,
-            'consents_today' => $consents_today,
-            'cookies'        => $cookies,
-            'trackers'       => $trackers,
+        // Prepare base stats with defaults for the widget
+        $base_stats = [
+            'consents_total' => (int)($body['consents_total'] ?? 0),
+            'consents_today' => (int)($body['consents_today'] ?? 0),
+            'cookies'        => (int)($body['cookies'] ?? 0),
+            'trackers'       => (int)($body['trackers'] ?? 0),
             'updated_local'  => $updated_local,
             'source'         => 'api',
         ];
+
+        // Merge with all other data from the API body so we can use it in the dashboard
+        return array_merge($body, $base_stats);
     }
 
     // Oväntad respons: fall back till cache om möjligt
@@ -153,7 +150,7 @@ function qookieqloud_render_stats_widget() {
                 <?php
                 $updated_raw = $stats['updated_at'] ?? '';
                 $updated_ts  = is_numeric($updated_raw) ? (int) $updated_raw : strtotime($updated_raw); // funkar för ISO8601/Z och "Y-m-d H:i:s"
-                $updated_local = $updated_ts ? wp_date( get_option('date_format') . ' dashboard-widget.php' .get_option('time_format'), $updated_ts ) : '';
+                $updated_local = $updated_ts ? wp_date( get_option('date_format') . ' ' . get_option('time_format'), $updated_ts ) : '';
                 ?>
             <span class="qoq-updated">
               <?php _e('Updated', 'qookieqloud'); ?>:
@@ -256,7 +253,7 @@ add_action('wp_ajax_qookieqloud_stats_refresh', function(){
     set_transient(QOOKIEQLOUD_STATS_TRANSIENT, $fresh, QOOKIEQLOUD_STATS_TTL);
 
     // Format för klienten
-    $updated_local = get_date_from_gmt( gmdate('Y-m-d H:i:s', strtotime($fresh['updated_at'])), get_option('date_format') . ' dashboard-widget.php' .get_option('time_format') );
+    $updated_local = get_date_from_gmt( gmdate('Y-m-d H:i:s', strtotime($fresh['updated_at'])), get_option('date_format') . ' ' . get_option('time_format') );
     wp_send_json_success([
         'consents_total' => (int) $fresh['consents_total'],
         'consents_today' => (int) $fresh['consents_today'],

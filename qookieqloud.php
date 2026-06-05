@@ -4,7 +4,7 @@
 Plugin Name: QookieQloud™ Consent Management
 Plugin URI: https://qookieqloud.com/wordpress
 Description: Connects to and integrates Cookie-Consent-Manager from QookieQloud™ by Qodli AB.
-Version: 1.4.5
+Version: 2.0.0
 Author: Qod:li AB
 Author URI: https://qodli.se
 License: GPLv2
@@ -96,7 +96,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'qookieqloud_add_
 // Add a "Settings" link in the plugins list
 function qookieqloud_add_settings_link($links) {
     // URL to the plugin's settings page
-    $settings_url = add_query_arg('page', 'qookieqloud', admin_url('options-general.php'));
+    $settings_url = add_query_arg('page', 'qookieqloud-settings', admin_url('admin.php'));
 
     // Add the link to the existing links array
     $settings_link = '<a href="' . esc_url($settings_url) . '">Settings</a>';
