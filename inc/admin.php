@@ -6,6 +6,25 @@ if (!defined('ABSPATH')) exit;
 define('QOOKIEQLOUD_LOGO_URL', plugins_url('../assets/QookieQloud-Logo.png', __FILE__));
 
 /**
+ * Get the QookieQloud icon for the WordPress admin menu.
+ */
+function qookieqloud_admin_menu_icon() {
+    $svg_path = plugin_dir_path(__FILE__) . '../assets/qookieqloud-eyes-white.svg';
+
+    if (!is_readable($svg_path)) {
+        return 'dashicons-visibility';
+    }
+
+    $svg = file_get_contents($svg_path);
+
+    if (!$svg) {
+        return 'dashicons-visibility';
+    }
+
+    return 'data:image/svg+xml;base64,' . base64_encode($svg);
+}
+
+/**
  * Add admin notice if the domain is not registered
  */
 function qookieqloud_display_admin_notice() {
@@ -34,7 +53,7 @@ function qookieqloud_add_admin_menu() {
         'manage_options',
         'qookieqloud',
         'qookieqloud_render_dashboard_page', // Default to dashboard
-        'dashicons-visibility', // Eye icon matches the "eyes" theme
+        qookieqloud_admin_menu_icon(),
         25
     );
 

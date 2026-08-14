@@ -55,6 +55,16 @@ add_action('admin_bar_menu', function($wp_admin_bar){
     ]);
 
     $wp_admin_bar->add_node([
+        'id'     => 'qookieqloud-eyes-dashboard',
+        'parent' => 'qookieqloud-eyes',
+        'title'  => __('Dashboard', 'qookieqloud'),
+        'href'   => admin_url('admin.php?page=qookieqloud'),
+        'meta'   => [
+            'title' => __('Open QookieQloud™ Dashboard', 'qookieqloud'),
+        ],
+    ]);
+
+    $wp_admin_bar->add_node([
         'id'     => 'qookieqloud-eyes-divider-1',
         'parent' => 'qookieqloud-eyes',
         'title'  => '<span class="qoq-eyes-divider"></span>',
