@@ -4,9 +4,12 @@
 Plugin Name: QookieQloud™ Consent Management
 Plugin URI: https://qookieqloud.com/wordpress
 Description: Connects to and integrates Cookie-Consent-Manager from QookieQloud™ by Qodli AB.
-Version: 2.0.3
+Version: 2.0.4
 Author: Qod:li AB
 Author URI: https://qodli.se
+Requires at least: 5.0
+Requires PHP: 7.4
+Requires Plugins: wp-consent-api
 License: GPLv2
 */
 
@@ -24,6 +27,31 @@ require_once plugin_dir_path(__FILE__) . 'inc/dashboard-widget.php';
 
 // Declare Consent API compliance so Site Health recognises the integration.
 add_filter('wp_consent_api_registered_' . plugin_basename(__FILE__), '__return_true');
+
+/**
+ * Check if required dependencies (WP Consent API) are active.
+ */
+function qookieqloud_check_dependencies() {
+    if (!function_exists('wp_has_consent') && !defined('WP_CONSENT_API_URL')) {
+        add_action('admin_notices', function() {
+            if (!current_user_can('activate_plugins')) {
+                return;
+            }
+
+            $install_url = wp_nonce_url(
+                self_admin_url('update.php?action=install-plugin&plugin=wp-consent-api'),
+                'install-plugin_wp-consent-api'
+            );
+
+            echo '<div class="notice notice-warning is-dismissible">';
+            echo '<p><strong>' . esc_html__('QookieQloud™ Consent Management:', 'qookieqloud') . '</strong> ' .
+                 esc_html__('This plugin requires the WP Consent API plugin to be installed and active in order to properly load and manage cookie consents.', 'qookieqloud') . '</p>';
+            echo '<p><a href="' . esc_url($install_url) . '" class="button button-primary">' . esc_html__('Install & Activate WP Consent API', 'qookieqloud') . '</a></p>';
+            echo '</div>';
+        });
+    }
+}
+add_action('admin_init', 'qookieqloud_check_dependencies');
 
 /**
  * Check domain registration on activation
