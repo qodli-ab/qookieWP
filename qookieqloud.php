@@ -4,7 +4,7 @@
 Plugin Name: QookieQloud™ Consent Management
 Plugin URI: https://qookieqloud.com/wordpress
 Description: Connects to and integrates Cookie-Consent-Manager from QookieQloud™ by Qodli AB.
-Version: 2.0.4
+Version: 2.0.5
 Author: Qod:li AB
 Author URI: https://qodli.se
 Requires at least: 5.0
@@ -21,6 +21,9 @@ define('QOOKIEQLOUD_SECRET', 'dapfe1?Wutfix/cerhig');
 
 // Include other files
 require_once plugin_dir_path(__FILE__) . 'inc/helpers.php';
+require_once plugin_dir_path(__FILE__) . 'inc/v2.php';
+add_action('plugins_loaded', 'qookieqloud_api_mode');
+add_action('init', function () { load_plugin_textdomain('qookieqloud', false, dirname(plugin_basename(__FILE__)) . '/languages'); });
 require_once plugin_dir_path(__FILE__) . 'inc/admin.php';
 require_once plugin_dir_path(__FILE__) . 'inc/adminbar-eyes.php';
 require_once plugin_dir_path(__FILE__) . 'inc/dashboard-widget.php';
@@ -57,6 +60,7 @@ add_action('admin_init', 'qookieqloud_check_dependencies');
  * Check domain registration on activation
  */
 function qookieqloud_check_domain_registration() {
+    if (qookieqloud_api_mode() === 'v2') return;
     $domain = wp_parse_url(home_url(), PHP_URL_HOST);
     $data = wp_json_encode(['domain' => $domain]);
 
@@ -99,6 +103,10 @@ register_activation_hook(__FILE__, 'qookieqloud_check_domain_registration');
 
 // Conditionally add "Re-check" or "Registered" in the plugin actions
 function qookieqloud_add_recheck_or_registered_link($links) {
+    if (qookieqloud_api_mode() === 'v2') {
+        array_unshift($links, '<span>' . esc_html(qookieqloud_v2_connection() ? __('Connected', 'qookieqloud') : __('Not connected', 'qookieqloud')) . '</span>');
+        return $links;
+    }
     $domain_status = get_option('qookieqloud_domain_registered', 'not_checked');
 
     if ($domain_status === 'registered') {
@@ -139,6 +147,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'qookieqloud_add_
  * Enqueue the consent manager script
  */
 function qookieqloud_enqueue_scripts() {
+    if (qookieqloud_api_mode() === 'v2') { qookieqloud_v2_enqueue(); return; }
     $domain_registered = get_option('qookieqloud_domain_registered', 'not_checked');
     $load_setting = get_option('qookieqloud_load_for_logged_in', 'public');
 

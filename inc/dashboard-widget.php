@@ -19,6 +19,7 @@ define('QOOKIEQLOUD_STATS_URL', 'https://app.qookieqloud.com/api/v1/domainstats'
  * Byt ut innehållet mot riktig API-kallare (wp_remote_get / Guzzle etc).
  */
 function qookieqloud_fetch_stats_from_backend() : array {
+    if (qookieqloud_api_mode() === 'v2') return qookieqloud_v2_stats();
     $domain = wp_parse_url(home_url(), PHP_URL_HOST);
     $data = wp_json_encode(['domain' => $domain]);
 
@@ -103,6 +104,7 @@ function qookieqloud_fetch_stats_from_backend() : array {
 
 /** Hämta (ev. från cache) */
 function qookieqloud_get_stats_cached() : array {
+    if (qookieqloud_api_mode() === 'v2') return qookieqloud_v2_stats();
     $data = get_transient(QOOKIEQLOUD_STATS_TRANSIENT);
     if ($data && is_array($data)) {
         return $data + ['cached' => true];
@@ -115,6 +117,7 @@ function qookieqloud_get_stats_cached() : array {
 
 /** Dashboard widget registrering */
 add_action('wp_dashboard_setup', function () {
+    if (!current_user_can('manage_options')) return;
     wp_add_dashboard_widget(
         'qookieqloud_stats_widget',
         __('QookieQloud Stats', 'qookieqloud'),
@@ -124,6 +127,8 @@ add_action('wp_dashboard_setup', function () {
 
 /** Render widget UI (server-side) */
 function qookieqloud_render_stats_widget() {
+    if (!current_user_can('manage_options')) return;
+    if (qookieqloud_api_mode() === 'v2') { qookieqloud_render_connection(true); return; }
     $stats = qookieqloud_get_stats_cached();
     $accent = '#5CBF8B';
     ?>
@@ -246,7 +251,13 @@ function qookieqloud_render_stats_widget() {
 
 /** AJAX: uppdatera stats on demand */
 add_action('wp_ajax_qookieqloud_stats_refresh', function(){
+    if (!current_user_can('manage_options')) wp_send_json_error([], 403);
     check_ajax_referer('qookieqloud_stats_refresh');
+    if (qookieqloud_api_mode() === 'v2') {
+        $data = qookieqloud_v2_stats();
+        if (!$data) wp_send_json_error([], 503);
+        wp_send_json_success($data);
+    }
 
     // Hämta färskt (bypass cache) eller respektera TTL? Här bypassar vi:
     $fresh = qookieqloud_fetch_stats_from_backend();

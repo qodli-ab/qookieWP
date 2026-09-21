@@ -3,64 +3,73 @@ Contributors: qodliab
 Tags: cookie consent, GDPR, privacy, consent management, consentmode v2
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 Requires PHP: 7.4
 Requires Plugins: wp-consent-api
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Automated and effortless cookie consent management within WordPress, powered by QookieQloud™. Easily manage cookies, collect consents.
+Connect WordPress to QookieQloud to load your cookie banner and view consent statistics.
 
 == Description ==
 
-QookieQloud™ Consent Management Platform brings you a powerful, automated solution for cookie consent management within WordPress, making GDPR compliance effortless. Manage cookies and collect consents for one or multiple domains, directly from the QookieQloud™ Platform.
-By installing this plugin, you agree to the Terms of Service and Privacy Policy available at:
+Manage banner design, cookie categories and consent settings in QookieQloud. The WordPress plugin loads your banner and shows statistics for the domain you connect.
 
-- **Terms of Service & Privacy Policy **: [https://qookieqloud.com/policy](https://qookieqloud.com/policy)
-
-### Key Features
-
-- **Automated Consent Management**: Automatically load the QookieQloud™ Cookie Consent Manager script in your WordPress site, ensuring cookies are managed in compliance with privacy laws.
-- **Domain Registration and Verification**: Quick and easy domain registration with QookieQloud™ directly from your WordPress plugin dashboard.
-- **Centralized Management**: Access and manage consents for multiple domains from a single platform, making it ideal for users with multiple sites.
-- **Customizable Loading**: Configure settings to load the consent manager script based on visitor type—public visitors only or both logged-in and public visitors.
-- **User-Friendly Setup**: Simple, intuitive setup with minimal configuration. Get started with just a few clicks.
-
-### How It Works
-
-1. **Install & Activate**: Install and activate the QookieQloud™ plugin. Upon activation, the plugin will verify your domain with QookieQloud™ to enable automated cookie consent management.
-2. **Manage Settings**: Choose whether the consent manager should load for all visitors or only public visitors (excluding logged-in users).
-3. **Multi-Domain Support**: Manage cookies and consents for multiple domains from the QookieQloud™ platform dashboard.
-4. **Real-Time Consent Management**: Real-time tracking and management of cookies and user consents ensure that your website stays compliant with GDPR and privacy regulations.
+New installations use the v2 connection flow. Existing v1 installations keep their current banner until an administrator explicitly connects to v2. Availability of v2 depends on your account's rollout access in QookieQloud.
 
 == Installation ==
 
-1. Download the QookieQloud™ Consent Management Platform plugin.
-2. Upload the plugin files to the `/wp-content/plugins/qookieqloud` directory or install directly through the WordPress plugins screen.
-3. Activate the plugin through the 'Plugins' screen in WordPress.
-4. Once activated, the plugin will attempt to verify your domain with QookieQloud™. Follow the prompt if your domain is not yet registered.
+1. Install and activate WP Consent API and QookieQloud.
+2. Open QookieQloud in the WordPress administration menu and click Connect to QookieQloud.
+3. Sign in at app.qookieqloud.com in the popup. Select a domain you manage, or add one, and approve.
+4. Return to WordPress. The keys are saved automatically: there is nothing to copy. The banner is enabled by default for public visitors; review the banner switches to change this.
+5. Clear any page or CDN cache after connecting or changing the banner settings.
+
+PHP OpenSSL is required for v2. HTTPS is required for public callback addresses; HTTP localhost and 127.0.0.1 are supported for local testing.
 
 == External Services ==
 
-This plugin sends the domainname of your wordpress site to verify if the domain is registered in our platform: https://app.qookie.cloud, which ofcourse is free.
-It also loads the consent-manager from that same platform to enable the cookie-consent-manager dialog that will appear on your homepage when activated.
-The consent-manager itself will check and show your visitors categorized cookies that are used on your homepage, so they can accept or decline the usage of them.
+QookieQloud is an external service. An account and a domain in QookieQloud are required.
+
+The connection popup opens https://app.qookieqloud.com. It sends the integration type, WordPress return address, a random state and a PKCE challenge. After you approve, WordPress exchanges a one-time code for API credentials over HTTPS. The private credential stays encrypted on your WordPress server and is used to read domain statistics and revoke this installation's access. It cannot sign in to your QookieQloud account.
+
+For enabled banners, visitors load scripts from https://cf-cdn.qookieqloud.com/v2/. Only the public site key appears in the page. The banner contacts the QookieQloud API to retrieve settings and submit detected cookies and consent choices. A public key is not a secret or an account login credential.
+
+Existing v1 installations continue their original registration and statistics requests to https://app.qookieqloud.com/api/v1/ and their original CDN loader until explicitly connected to v2.
+
+Service terms and privacy information: https://qookieqloud.com/policy
 
 == Frequently Asked Questions ==
 
-= How do I register my domain with QookieQloud™? =
-After activation, the plugin will automatically check your domain registration status with QookieQloud™. If the domain is not registered, you’ll see a prompt with a link to register or log in to your QookieQloud™ account.
+= Will upgrading interrupt my existing banner? =
+Existing v1 installations stay on v1. The plugin switches only after an administrator successfully approves and saves a v2 connection. Clear page caches after switching.
 
-= Can I configure the plugin to load only for public visitors? =
-Yes! In the QookieQloud™ settings, you can specify whether the consent manager should load for public visitors only or all visitors (including logged-in users).
+= Do I need to copy API keys? =
+No. The popup exchanges keys automatically. The private key remains on the server, while the public key travels with the banner.
 
-= Where can I manage cookies and consents for multiple domains? =
-Once your domain is registered, log in to the QookieQloud™ dashboard at https://app.qookieqloud.com. You’ll be able to manage cookies, consents, and more for all your registered domains in one place.
+= Can a partner connect a customer's domain? =
+Yes, provided the account has access to that customer's domain and has v2 access enabled.
 
-= Do I need to configure cookies individually? =
-The QookieQloud™ platform automatically manages cookies and consent collection for you, ensuring privacy compliance without the need for manual configuration.
+= Can I test from localhost? =
+Yes. The browser returns to WordPress; QookieQloud does not need to reach your local server. Selecting a live domain shares that domain's settings and statistics. Choose a dedicated test domain to keep test activity separate.
+
+= What happens when I disconnect? =
+The plugin revokes this installation's private API access and stops adding the banner. It does not delete the domain, revoke other installations or fall back to v1. Clear cached pages afterwards. Previously published public keys are shared domain identifiers, not revoked private credentials.
+
+= Can I show the banner to logged-in visitors? =
+Yes. Enable the corresponding switch in Banner settings and save. Clear page caches afterwards.
+
+= What if I move or clone WordPress? =
+The private connection is bound to the site's URL and WordPress authentication salt. Reconnect after either changes. A copied database alone cannot decrypt the connection at another site URL.
 
 == Changelog ==
+
+= 2.0.5 =
+* Refined the WordPress dashboard layout with a full-width hero and centered content cards.
+* Moved dashboard KPIs into the hero and added a Cookie Scan summary block.
+* Added v2 popup connection, private API statistics and public-key banner loading.
+* Added confirmed change-connection and disconnect actions, banner switches and bundled connection artwork.
+* Preserved v1 for existing installations until explicit migration.
 
 = 2.0.4 =
 * Added formal plugin dependency requirement for WP Consent API (Requires Plugins header and admin notice).

@@ -1,0 +1,215 @@
+msgid ""
+msgstr "Project-Id-Version: QookieQloud v2\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#: inc/connection-view.php
+msgid "API connection available"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "API data currently unavailable"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Accepted today"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Approve, return here and review your banner settings."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Banner enabled"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Banner paused"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Banner settings"
+msgstr ""
+
+#: inc/v2.php
+msgid "Change connection"
+msgstr ""
+
+#: inc/v2.php
+msgid "Change connection? The current connection remains until the new connection is approved and saved."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Choose a domain you manage, or add a new one."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Clear the site cache after changing these settings."
+msgstr ""
+
+#: qookieqloud.php inc/adminbar-eyes.php
+msgid "Connect"
+msgstr ""
+
+#: inc/v2.php
+msgid "Connect to QookieQloud"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Connect your website to start using QookieQloud."
+msgstr ""
+
+#: qookieqloud.php inc/adminbar-eyes.php
+msgid "Connected"
+msgstr ""
+
+#: inc/connection-view.php
+#, php-format
+msgid "Connected to %s"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Connected to QookieQloud. Clear your site cache."
+msgstr ""
+
+#: inc/v2.php
+msgid "Connected. You can return to WordPress."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Connection"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Consent overview"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Consents today"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Cookies found"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Custom choices today"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Disconnect"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Disconnect this installation? Its private API access will be revoked and the plugin will stop loading the banner. Your domain remains in QookieQloud. Clear the site cache afterwards."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Disconnected. Clear your site cache to remove the banner from cached pages."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Enable the banner"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Last 30 days"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Last 7 days"
+msgstr ""
+
+#: qookieqloud.php inc/adminbar-eyes.php
+msgid "Not connected"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Only API access is granted. The plugin cannot sign in to your QookieQloud account. Banner design and consent settings are managed in QookieQloud."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Open QookieQloud"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "PHP OpenSSL is required to store the connection securely."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Pages scanned"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Privacy audit"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Rejected today"
+msgstr ""
+
+#: inc/v2.php
+msgid "Return to QookieQloud"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Save settings"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Settings saved. Clear your site cache."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Show the banner for logged-in users"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Sign in to QookieQloud in the window that opens."
+msgstr ""
+
+#: inc/v2.php
+msgid "Sign in to WordPress and start a new connection from QookieQloud."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Sign in, choose your domain and approve the connection. No API keys to copy or scripts to paste."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Statistics are currently unavailable. You can still manage the banner and connection below."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "The action could not be completed. Your existing connection has been kept. Please try again."
+msgstr ""
+
+#: inc/v2.php
+msgid "The connection could not be completed. Start again from WordPress."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "This installation"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Three steps. One connection."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Total consents"
+msgstr ""
+
+#: inc/v2.php
+msgid "You cannot manage this connection."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Your consent overview, banner settings and connection in one place."
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Your cookie banner starts here"
+msgstr ""
+
+#: inc/connection-view.php
+msgid "Your existing banner keeps using v1. Connect when you are ready to switch this installation to v2."
+msgstr ""

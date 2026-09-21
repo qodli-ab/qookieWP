@@ -6,8 +6,10 @@ add_action('admin_bar_menu', function($wp_admin_bar){
 
     // Hämta status
     $domain_status = get_option('qookieqloud_domain_registered', 'not_checked'); // registered | not_registered | not_checked
-    $is_registered = ($domain_status === 'registered');
-    $status_label  = $is_registered ? __('Registered', 'qookieqloud') : __('Verify', 'qookieqloud');
+    $is_registered = qookieqloud_api_mode() === 'v2' ? (bool) qookieqloud_v2_connection() : ($domain_status === 'registered');
+    $status_label = qookieqloud_api_mode() === 'v2'
+        ? ($is_registered ? __('Connected', 'qookieqloud') : __('Connect', 'qookieqloud'))
+        : ($is_registered ? __('Registered', 'qookieqloud') : __('Verify', 'qookieqloud'));
 
     // Val av färg på "ögon"-prickar
     $eye_color = $is_registered ? '#5CBF8B' : '#E53935'; // grön / röd

@@ -28,6 +28,7 @@ function qookieqloud_admin_menu_icon() {
  * Add admin notice if the domain is not registered
  */
 function qookieqloud_display_admin_notice() {
+    if (qookieqloud_api_mode() === 'v2') return;
     $domain_status = get_option('qookieqloud_domain_registered', 'not_checked');
 
     // Show notice if domain is not registered
@@ -86,6 +87,8 @@ add_action('admin_menu', 'qookieqloud_add_admin_menu');
  * Render the settings page content
  */
 function qookieqloud_render_settings_page() {
+    if (!current_user_can('manage_options')) return;
+    if (qookieqloud_api_mode() === 'v2') { qookieqloud_render_connection(); return; }
     ?>
     <div class="wrap">
         <img src="<?php echo esc_url(QOOKIEQLOUD_LOGO_URL);?>" alt="QookieQloud Logo" style="max-width: 150px; margin-bottom: 20px; position: absolute; top: 20px; right: 20px;">
@@ -106,6 +109,9 @@ function qookieqloud_render_settings_page() {
  * Render the dashboard page content (Forward to dashboard.php)
  */
 function qookieqloud_render_dashboard_page() {
+    if (!current_user_can('manage_options')) return;
+    if (qookieqloud_api_mode() === 'v2') { qookieqloud_render_connection(); return; }
+    qookieqloud_render_connection(true);
     if (file_exists(plugin_dir_path(__FILE__) . 'dashboard.php')) {
         require_once plugin_dir_path(__FILE__) . 'dashboard.php';
         if (function_exists('qookieqloud_render_dashboard_content')) {
@@ -119,7 +125,7 @@ function qookieqloud_render_dashboard_page() {
 
 function qookieqloud_sanitize_load_setting($input) {
     // Validate and sanitize the input
-    $allowed_values = ['public', 'private', 'logged_in']; // Specify allowed values
+    $allowed_values = ['public', 'all']; // Specify allowed values
     if (in_array($input, $allowed_values, true)) {
         return $input; // Return the valid value
     }
@@ -179,6 +185,7 @@ function qookieqloud_load_for_logged_in_render() {
  * Handle the re-check action for domain registration
  */
 function qookieqloud_recheck_domain() {
+    if (!current_user_can('manage_options')) wp_die('', '', ['response' => 403]);
     // Verify nonce for security
     $nonce = isset($_GET['nonce']) ? sanitize_text_field(wp_unslash($_GET['nonce'])) : '';
     if (!wp_verify_nonce(sanitize_text_field($nonce), 'qookieqloud_recheck_nonce')) {
@@ -199,7 +206,7 @@ function qookieqloud_maybe_add_recheck_action() {
 
     if ($action === 'qookieqloud_recheck_domain') {
         // Verify the nonce before proceeding
-        $nonce = isset($_GET['_wpnonce']) ? sanitize_text_field(wp_unslash($_GET['_wpnonce'])) : '';
+        $nonce = isset($_GET['nonce']) ? sanitize_text_field(wp_unslash($_GET['nonce'])) : '';
         if (!wp_verify_nonce($nonce, 'qookieqloud_recheck_nonce')) {
             wp_die(esc_html__('Security check failed', 'qookieqloud'));
         }
