@@ -163,7 +163,7 @@ function qookieqloud_v2_enqueue() {
 add_filter('script_loader_tag', function ($tag, $handle) {
     if ($handle !== 'qookieqloud-v2') return $tag;
     $connection = qookieqloud_v2_connection();
-    return $connection ? str_replace('<script ', '<script data-site-key="' . esc_attr($connection['site_key']) . '" ', $tag) : '';
+    return $connection ? str_replace('<script ', '<script data-integration="wordpress" data-site-key="' . esc_attr($connection['site_key']) . '" ', $tag) : '';
 }, 10, 2);
 add_action('admin_post_qookieqloud_v2_settings', function () {
     qookieqloud_v2_guard('qookieqloud_v2_settings');

@@ -3,7 +3,7 @@ Contributors: qodliab
 Tags: cookie consent, GDPR, privacy, consent management, consentmode v2
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 Requires PHP: 7.4
 Requires Plugins: wp-consent-api
 License: GPLv2 or later
@@ -63,6 +63,9 @@ Yes. Enable the corresponding switch in Banner settings and save. Clear page cac
 The private connection is bound to the site's URL and WordPress authentication salt. Reconnect after either changes. A copied database alone cannot decrypt the connection at another site URL.
 
 == Changelog ==
+
+= 2.0.6 =
+* Identify the WordPress integration to the v2 banner so its WordPress Consent API bridge is enabled only on WordPress sites.
 
 = 2.0.5 =
 * Refined the WordPress dashboard layout with a full-width hero and centered content cards.
